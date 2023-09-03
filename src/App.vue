@@ -55,11 +55,13 @@ const logout = () => {
 
   router.push("/");
 };
+
+const navIsOpen = ref(false);
 </script>
 
 <template>
   <div class="w-full h-full">
-    <div id="nav" class="w-full flex flex-col fixed z-50 top-0 left-0">
+    <div id="nav" class="w-full lg:flex hidden flex-col fixed z-50 top-0 left-0">
       <div class='w-full bg-black flex flex-row items-center justify-center gap-10 border-b-[1px] border-b-[#555]'>
           <a href="https://discord.gg/ejRSwc9BnK" target="_blank">Discord</a>
           <a href="https://twitter.com/arasemr1234" target="_blank">Twitter</a>
@@ -91,6 +93,22 @@ const logout = () => {
             <a class="w-1/4 text-center py-2" href="https://discord.gg/ejRSwc9BnK" target="_blank">Community</a>
           </div>
       </nav>
+    </div>
+    <i class="fa-solid fa-bars z-50 fixed top-0 left-0 fa-2x ml-2 mt-2 lg:hidden" @click="navIsOpen = !navIsOpen"></i>
+    <div :class="`lg:hidden flex flex-col items-center justify-center gap-3 fixed top-0 left-0 overflow-auto z-40 bg-black/30 w-full h-full duration-300 ${navIsOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`">
+      <router-link exactActiveClass="0" class="text-center" to='/'>Home</router-link>
+      <router-link exactActiveClass="0" class="text-center" to='/videos'>Hole Videos</router-link>
+      <router-link exactActiveClass="0" class="text-center" to='/stars'>Hole Stars</router-link>
+      <span class="hr"></span>
+      <div v-if="state.auth.loggedIn" class="flex flex-col items-center w-full gap-3">
+        <router-link to='/'>{{state.auth.user.username}}</router-link>
+        <a @click="logout">Logout</a>
+        <router-link to='/upload'>Upload video</router-link>
+      </div>
+      <div v-else class="flex flex-col items-center w-full gap-3">
+        <router-link to='/log-in'>Log In</router-link>
+        <router-link to='/sign-up'>Sign Up</router-link>
+      </div>
     </div>
     <div class="w-full h-full flex items-center justify-center" v-if="loading">
       <Loading/>

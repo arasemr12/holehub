@@ -44,7 +44,7 @@ const submit = async() => {
 
 <template>
     <div class="w-full h-full flex flex-col items-center">
-        <form @submit.prevent="submit" class="lg:w-2/3 w-full h-full flex flex-col items-center justify-center gap-5 overflow-auto pt-10">
+        <form @submit.prevent="submit" class="lg:w-2/3 w-full h-full flex flex-col items-center justify-center gap-5 overflow-auto lg:pt-10">
             <h1 class="text-2xl font-bold">Log In</h1>
             <input class="w-full" type="text" placeholder="email" v-model="email">
             <input class="w-full" type="text" placeholder="password" v-model="password">

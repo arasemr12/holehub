@@ -41,4 +41,8 @@
   .active{
     @apply border-b-2 border-b-[rgb(255,144,0)];
   }
+
+  .hr{
+    @apply h-[1px] bg-gray-700 w-2/3;
+  }
 }

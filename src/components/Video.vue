@@ -10,8 +10,8 @@ const {video} = defineProps({
 
 <template>
     <div class="lg:w-1/4 w-full flex flex-col p-4">
-        <RouterLink class="w-full h-full" :to="`/video/${video.id}`" activeClass="0">
-            <img draggable="false" class="w-full h-full animate-pulse rounded-lg bg-gray-600" onload="(() => {
+        <RouterLink class="w-full h-auto" :to="`/video/${video.id}`" activeClass="0">
+            <img draggable="false" class="w-full h-auto animate-pulse rounded-lg bg-gray-600" onload="(() => {
                 this.classList.remove('animate-pulse')
             })()" :src="video.thumbnail" alt="" />
         </RouterLink>

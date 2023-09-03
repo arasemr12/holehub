@@ -36,8 +36,8 @@ const scroll = async() => {
     <div v-if="videos.length < 1" class="w-full h-full flex items-center justify-center">
         <Loading/>
     </div>
-    <div v-else ref="main" @scroll="scroll" class="w-full h-full overflow-auto pt-48">
-        <span class="text-2xl font-bold m-4">Hot Hole Videos Worldwide</span>
+    <div v-else ref="main" @scroll="scroll" class="w-full h-full overflow-auto lg:pt-48 pt-8 flex flex-col items-center">
+        <span class="text-2xl text-center font-bold">Hot Hole Videos Worldwide</span>
         <div class="flex flex-row flex-wrap items-center w-full h-full">
             <Video v-for="video in videos" :key="video.id" :video="video"/>
         </div>
