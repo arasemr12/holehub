@@ -79,4 +79,4 @@ const store = createStore({
     }
 });
 
-createApp(App).use(router).use(store).mount('#app')
+createApp(App).use(router).use(store).mount('#app');
