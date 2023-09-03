@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  *{
+    @apply p-0 m-0 box-border outline-none border-0;
+  }
+
+  html,
+  body,
+  #app{
+    @apply w-full h-full text-white bg-black;
+  }
+
+  .green_rounded_btn{
+    @apply py-2 px-4 bg-green-600 hover:bg-green-700 cursor-pointer rounded-full;
+  }
+
+  .classic_rounded_btn{
+    @apply py-2 px-4 bg-[#302525] hover:bg-[#413232] duration-300 shadow-xl cursor-pointer rounded-full;
+  }
+
+  .mainBG1{
+    @apply bg-gradient-to-b from-purple-900 to-blue-500;
+  }
+
+  ::-webkit-scrollbar{
+    @apply h-2 w-2 bg-gray-800;
+  }
+
+  ::-webkit-scrollbar-thumb{
+    @apply bg-gray-700 hover:bg-gray-700/50;
+  }
+
+  input{
+    @apply py-1 px-2 rounded;
+    background: rgb(37,37,37);
+  }
+
+  .active{
+    @apply border-b-2 border-b-[rgb(255,144,0)];
+  }
+}
