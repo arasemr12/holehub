@@ -4,14 +4,16 @@ import { ref } from "vue";
 import Auth from "../middleware/Auth";
 import axios from "../axios";
 import { useRouter } from "vue-router";
+import Loading from "../components/Loading.vue";
 
 Auth();
 
 const id = ref("");
 const title = ref("");
 
-const video = ref(null);
+//const video = ref(null);
 const router = useRouter();
+const loadingReq = ref(false);
 
 //const allowedExts = ["MP4","AVI","M4V","MPEG","OGV","MOV","WEBM","MPG"];
 
@@ -38,16 +40,24 @@ const router = useRouter();
 const err = ref("");
 
 const submit = async() => {
+    loadingReq.value = true;
+
     let res = await axios.post("/api/video/create",{
         id:id.value,
         title:title.value
     }).catch((e) => {
+        loadingReq.value = false;
         err.value = e.response.data.message;
     });
 
     let data = res.data;
 
-    if(!data.success) return err.value = data.message;
+    if(!data.success) {
+        loadingReq.value = false;
+        return err.value = data.message;
+    };
+
+    loadingReq.value = false;
 
     router.push(`/video/${data.video.id}`);
 };
@@ -99,7 +109,10 @@ const openSee = () => {
             <!--<input class="w-full" type="file" accept="video/*" @change="fileChange">-->
             <!--<iframe class="w-full h-full" :src="`https://www.youtube.com/embed/${id}`" title="no" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>-->
             <!--<video ref="video" class="w-full h-1/2" controls :src="src"></video>--->
-            <button class="classic_rounded_btn" type="submit">Upload</button>
+            <div v-if="loadingReq" class="w-full flex items-center justify-center">
+                <Loading/>
+            </div>
+            <button v-else class="classic_rounded_btn" type="submit">Upload</button>
             <span class="w-full" v-if="err">{{ err }}</span>
         </form>
     </div>

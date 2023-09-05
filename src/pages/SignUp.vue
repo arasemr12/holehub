@@ -4,12 +4,15 @@ import axios from "../axios";
 import {onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
 import NoAuth from "../middleware/NoAuth";
+import Loading from "../components/Loading.vue";
 
 NoAuth();
 
 const email = ref("");
 const username = ref("");
 const password = ref("");
+
+const loadingReq = ref(false);
 
 const err = ref(null);
 
@@ -19,9 +22,14 @@ const router = useRouter();
 
 
 const submit = async() => {
+    loadingReq.value = true;
+
     let token = grecaptcha.getResponse(widget.value);
 
-    if(!token) return err.value = "Validate captcha!";
+    if(!token) {
+        loadingReq.value = false;
+        return err.value = "Validate captcha!";
+    }
 
     grecaptcha.reset(widget.value);
 
@@ -31,12 +39,18 @@ const submit = async() => {
         password:password.value,
         token
     }).catch((e) => {
+        loadingReq.value = false;
         err.value = e.response.data.message;
     });
 
     let data = res.data;
 
-    if(!data.success) return err.value = data.message;
+    if(!data.success) {
+        loadingReq.value = false;
+        return err.value = data.message;
+    };
+
+    loadingReq.value = false;
 
     router.push("/log-in");
 };
@@ -64,7 +78,10 @@ globalThis.onloadCaptcha = () => {
             <input class="w-full" type="text" placeholder="username" v-model="username">
             <input class="w-full" type="text" placeholder="password" v-model="password">
             <div id="captcha"></div>
-            <button class="classic_rounded_btn">Sign Up!</button>
+            <div v-if="loadingReq" class="w-full flex items-center justify-center">
+                <Loading/>
+            </div>
+            <button v-else class="classic_rounded_btn">Sign Up!</button>
             <span class="w-full" v-if="err">{{ err }}</span>
         </form>
     </div>
